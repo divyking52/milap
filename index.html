@@ -125,12 +125,14 @@ p {
   font-size: 12px;
   font-weight: 400;
   letter-spacing: -0.01em;
-  transition: transform 0.25s ease, opacity 0.25s ease;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease, box-shadow 0.35s ease;
+  will-change: transform;
 }
 
 .btn:hover {
-  transform: scale(1.03);
-  opacity: 0.92;
+  transform: translateY(-2px) scale(1.03);
+  opacity: 0.96;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
 }
 
 .btn-ghost {
@@ -178,6 +180,14 @@ p {
   padding: 12px 0;
   background: transparent;
   pointer-events: none;
+  transition: background 0.35s ease, backdrop-filter 0.35s ease, box-shadow 0.35s ease;
+}
+
+.site-header.is-scrolled {
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: saturate(160%) blur(14px);
+  -webkit-backdrop-filter: saturate(160%) blur(14px);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
 }
 
 .site-nav {
@@ -556,11 +566,11 @@ p {
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.45s ease;
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .image-row-item:hover img {
-  transform: scale(1.04);
+  transform: scale(1.08);
 }
 
 .intro-copy {
@@ -772,15 +782,18 @@ p {
 }
 
 .book-card {
+  position: relative;
   display: grid;
   gap: 12px;
   padding: 8px;
   border-radius: var(--radius);
-  transition: transform 0.3s ease;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  transform-style: preserve-3d;
+  will-change: transform;
 }
 
 .book-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-6px);
 }
 
 .book-card img {
@@ -789,11 +802,35 @@ p {
   object-fit: cover;
   border-radius: 10px;
   box-shadow: var(--shadow-soft);
-  transition: box-shadow 0.3s ease;
+  transition:
+    box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translateZ(18px);
 }
 
 .book-card:hover img {
-  box-shadow: var(--shadow);
+  box-shadow: 0 22px 48px rgba(0, 0, 0, 0.18);
+  transform: translateZ(18px) scale(1.03);
+}
+
+.tilt-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.tilt-glare {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  mix-blend-mode: soft-light;
+  z-index: 2;
+}
+
+.tilt-card:hover .tilt-glare {
+  opacity: 1;
 }
 
 .book-card h3 {
@@ -964,6 +1001,21 @@ p {
   .testimonials-track {
     animation: none;
   }
+
+  .tilt-card,
+  .book-card,
+  .note-card,
+  .btn,
+  .image-row-item img,
+  .featured-cover-lift,
+  .hero-float-book img {
+    transition: none !important;
+    transform: none !important;
+  }
+
+  .tilt-glare {
+    display: none;
+  }
 }
 
 /* About */
@@ -1129,11 +1181,12 @@ p {
   gap: 16px;
   padding: 18px 0;
   border-bottom: 1px solid var(--line);
-  transition: opacity 0.2s ease;
+  transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .note-card:hover {
-  opacity: 0.7;
+  opacity: 0.72;
+  transform: translateX(6px);
 }
 
 .note-card h3 {
@@ -1371,23 +1424,89 @@ p {
 
 
 
-/* Standalone extras */
+/* Standalone extras — advanced scroll / hover / parallax */
 .menu-overlay { display: none; }
 .menu-overlay.is-open { display: flex; }
-.reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.75s cubic-bezier(0.22,1,0.36,1), transform 0.75s cubic-bezier(0.22,1,0.36,1); }
-.reveal.is-in { opacity: 1; transform: none; }
-.hero-copy { animation: fade-up 0.8s cubic-bezier(0.22,1,0.36,1) both; }
-@keyframes fade-up { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }
-.parallax-y { will-change: transform; }
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, 36px, 0) scale(0.98);
+  filter: blur(8px);
+  transition:
+    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform, opacity, filter;
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+  filter: blur(0);
+}
+.hero-copy { animation: fade-up 1s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.hero-copy h1 { animation: fade-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.05s both; }
+.hero-copy .hero-sub { animation: fade-up 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.16s both; }
+.hero-copy .btn { animation: fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.26s both; }
+@keyframes fade-up {
+  from { opacity: 0; transform: translate3d(0, 32px, 0); filter: blur(8px); }
+  to { opacity: 1; transform: none; filter: blur(0); }
+}
+.parallax-y, .parallax-local { will-change: transform; }
 .footer-brand .brand { gap: 8px; font-size: 12px; line-height: 1; }
 .footer-brand .brand-mark { width: 14px; height: 14px; }
-.featured-cover-lift { transition: transform 0.35s cubic-bezier(0.22,1,0.36,1); }
-.featured-cover-wrap:hover .featured-cover-lift { transform: translateY(-6px); }
+.featured-cover-lift {
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+.featured-cover-wrap:hover .featured-cover-lift {
+  transform: translate3d(0, -14px, 0) rotate(-1.5deg) scale(1.03);
+}
+.tilt-card {
+  position: relative;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.tilt-glare {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  mix-blend-mode: soft-light;
+  z-index: 2;
+  background: radial-gradient(420px circle at 50% 50%, rgba(255,255,255,0.28), transparent 55%);
+}
+.tilt-card:hover .tilt-glare { opacity: 1; }
+.hero-float-book img {
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.hero-float-book:hover img {
+  transform: translate3d(0, -14px, 0) rotate(1.5deg) scale(1.03);
+}
+.quote-card {
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.hero-float-quote:hover .quote-card {
+  transform: translate3d(0, -6px, 0) scale(1.02);
+}
+.about-media img {
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.about-media:hover img {
+  transform: scale(1.03);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; filter: none; transition: none; }
+  .hero-copy, .hero-copy h1, .hero-copy .hero-sub, .hero-copy .btn { animation: none; }
+  .featured-cover-lift, .hero-float-book img, .quote-card, .tilt-card, .about-media img { transition: none !important; transform: none !important; }
+  .tilt-glare { display: none; }
+}
   </style>
 </head>
 <body>
   <div class="page" id="top">
-    <header class="site-header">
+    <header class="site-header" id="siteHeader">
       <nav class="site-nav" aria-label="Primary">
         <a class="brand" href="#top">
           <img class="brand-logo" src="https://admin.storebox.ai/media/b9ed1969-f141-4634-817a-55b6d605a186/1094ccdf-4af0-43b6-a414-8837f6b0cf38/logo.webp" alt="Milap Publications" />
@@ -1520,17 +1639,17 @@ p {
             <a class="btn btn-ghost" href="mailto:info@milappublications.com">Ask about a title</a>
           </div>
           <div class="book-grid">
-            <a class="book-card reveal" href="mailto:info@milappublications.com"><img src="https://admin.storebox.ai/media/b9ed1969-f141-4634-817a-55b6d605a186/e3d18768-164d-4ec6-bce2-3a206119022e/the-lonely-rhino.webp" alt="The Lonely Rhino" /><div><h3>The Lonely Rhino</h3><p class="sub">Wildlife storytelling</p></div><div class="book-meta-row"><span>₹499</span><span class="rating">★ 4.9</span></div></a>
-            <a class="book-card reveal" href="mailto:info@milappublications.com"><img src="https://admin.storebox.ai/media/b9ed1969-f141-4634-817a-55b6d605a186/54e040ea-2a7b-4f7f-817c-fe646f3f1d77/the-age-of-almost.webp" alt="The Age of Almost" /><div><h3>The Age of Almost</h3><p class="sub">Contemporary fiction</p></div><div class="book-meta-row"><span>₹299</span><span class="rating">★ 4.8</span></div></a>
-            <a class="book-card reveal" href="mailto:info@milappublications.com"><img src="https://admin.storebox.ai/media/b9ed1969-f141-4634-817a-55b6d605a186/c598bda8-dca4-46e2-8fe2-35c38eec3695/a-way-with-words.webp" alt="A Way With Words" /><div><h3>A Way With Words</h3><p class="sub">Language and craft</p></div><div class="book-meta-row"><span>₹299</span><span class="rating">★ 4.7</span></div></a>
-            <a class="book-card reveal" href="mailto:info@milappublications.com"><img src="https://admin.storebox.ai/media/b9ed1969-f141-4634-817a-55b6d605a186/d39289ec-6a26-4867-98ef-6fbdd725ef58/indispensable.webp" alt="Indispensable" /><div><h3>Indispensable</h3><p class="sub">Ideas that endure</p></div><div class="book-meta-row"><span>₹399</span><span class="rating">★ 4.8</span></div></a>
+            <a class="book-card tilt-card reveal" href="mailto:info@milappublications.com"><img src="https://admin.storebox.ai/media/b9ed1969-f141-4634-817a-55b6d605a186/e3d18768-164d-4ec6-bce2-3a206119022e/the-lonely-rhino.webp" alt="The Lonely Rhino" /><div><h3>The Lonely Rhino</h3><p class="sub">Wildlife storytelling</p></div><div class="book-meta-row"><span>₹499</span><span class="rating">★ 4.9</span></div></a>
+            <a class="book-card tilt-card reveal" href="mailto:info@milappublications.com"><img src="https://admin.storebox.ai/media/b9ed1969-f141-4634-817a-55b6d605a186/54e040ea-2a7b-4f7f-817c-fe646f3f1d77/the-age-of-almost.webp" alt="The Age of Almost" /><div><h3>The Age of Almost</h3><p class="sub">Contemporary fiction</p></div><div class="book-meta-row"><span>₹299</span><span class="rating">★ 4.8</span></div></a>
+            <a class="book-card tilt-card reveal" href="mailto:info@milappublications.com"><img src="https://admin.storebox.ai/media/b9ed1969-f141-4634-817a-55b6d605a186/c598bda8-dca4-46e2-8fe2-35c38eec3695/a-way-with-words.webp" alt="A Way With Words" /><div><h3>A Way With Words</h3><p class="sub">Language and craft</p></div><div class="book-meta-row"><span>₹299</span><span class="rating">★ 4.7</span></div></a>
+            <a class="book-card tilt-card reveal" href="mailto:info@milappublications.com"><img src="https://admin.storebox.ai/media/b9ed1969-f141-4634-817a-55b6d605a186/d39289ec-6a26-4867-98ef-6fbdd725ef58/indispensable.webp" alt="Indispensable" /><div><h3>Indispensable</h3><p class="sub">Ideas that endure</p></div><div class="book-meta-row"><span>₹399</span><span class="rating">★ 4.8</span></div></a>
           </div>
           <p class="eyebrow reveal" style="margin-top:40px;margin-bottom:18px">More from the catalogue</p>
           <div class="book-grid">
-            <a class="book-card reveal" href="mailto:info@milappublications.com"><img src="https://admin.storebox.ai/media/b9ed1969-f141-4634-817a-55b6d605a186/7419d96c-cad4-4d39-86cd-af7b94e2008f/baby-boo-trilogy.webp" alt="Baby Boo Trilogy" /><div><h3>Baby Boo Trilogy</h3><p class="sub">Stories for young readers</p></div><div class="book-meta-row"><span>₹899</span><span class="rating">★ 4.9</span></div></a>
-            <a class="book-card reveal" href="mailto:info@milappublications.com"><img src="https://admin.storebox.ai/media/b9ed1969-f141-4634-817a-55b6d605a186/e9519c61-e5eb-4ac7-a4a9-ca53ae5d8a25/pugmarks.webp" alt="Pugmarks and Pugdundees" /><div><h3>Pugmarks and Pugdundees</h3><p class="sub">2nd Edition</p></div><div class="book-meta-row"><span>₹399</span><span class="rating">★ 4.8</span></div></a>
-            <a class="book-card reveal" href="mailto:info@milappublications.com"><img src="https://admin.storebox.ai/media/b9ed1969-f141-4634-817a-55b6d605a186/9e67fff5-b72b-4f1d-bcaa-c0e404565e07/guru-gobind-singh.webp" alt="Guru Gobind Singh Sahib" /><div><h3>Guru Gobind Singh Sahib</h3><p class="sub">Heritage edition</p></div><div class="book-meta-row"><span>₹5,500</span><span class="rating">★ 5.0</span></div></a>
-            <a class="book-card reveal" href="mailto:info@milappublications.com"><img src="https://admin.storebox.ai/media/b9ed1969-f141-4634-817a-55b6d605a186/337a554a-dd0e-431c-b440-c65302d406c7/the-indian-edge.webp" alt="The Indian Edge" /><div><h3>The Indian Edge</h3><p class="sub">Ideas from India</p></div><div class="book-meta-row"><span>₹399</span><span class="rating">★ 4.7</span></div></a>
+            <a class="book-card tilt-card reveal" href="mailto:info@milappublications.com"><img src="https://admin.storebox.ai/media/b9ed1969-f141-4634-817a-55b6d605a186/7419d96c-cad4-4d39-86cd-af7b94e2008f/baby-boo-trilogy.webp" alt="Baby Boo Trilogy" /><div><h3>Baby Boo Trilogy</h3><p class="sub">Stories for young readers</p></div><div class="book-meta-row"><span>₹899</span><span class="rating">★ 4.9</span></div></a>
+            <a class="book-card tilt-card reveal" href="mailto:info@milappublications.com"><img src="https://admin.storebox.ai/media/b9ed1969-f141-4634-817a-55b6d605a186/e9519c61-e5eb-4ac7-a4a9-ca53ae5d8a25/pugmarks.webp" alt="Pugmarks and Pugdundees" /><div><h3>Pugmarks and Pugdundees</h3><p class="sub">2nd Edition</p></div><div class="book-meta-row"><span>₹399</span><span class="rating">★ 4.8</span></div></a>
+            <a class="book-card tilt-card reveal" href="mailto:info@milappublications.com"><img src="https://admin.storebox.ai/media/b9ed1969-f141-4634-817a-55b6d605a186/9e67fff5-b72b-4f1d-bcaa-c0e404565e07/guru-gobind-singh.webp" alt="Guru Gobind Singh Sahib" /><div><h3>Guru Gobind Singh Sahib</h3><p class="sub">Heritage edition</p></div><div class="book-meta-row"><span>₹5,500</span><span class="rating">★ 5.0</span></div></a>
+            <a class="book-card tilt-card reveal" href="mailto:info@milappublications.com"><img src="https://admin.storebox.ai/media/b9ed1969-f141-4634-817a-55b6d605a186/337a554a-dd0e-431c-b440-c65302d406c7/the-indian-edge.webp" alt="The Indian Edge" /><div><h3>The Indian Edge</h3><p class="sub">Ideas from India</p></div><div class="book-meta-row"><span>₹399</span><span class="rating">★ 4.7</span></div></a>
           </div>
         </div>
       </section>
@@ -1564,7 +1683,7 @@ p {
       <section class="section" id="about">
         <div class="container">
           <div class="about-grid">
-            <div class="about-media reveal"><img src="https://admin.storebox.ai/media/b9ed1969-f141-4634-817a-55b6d605a186/ab9483df-85be-4dec-b9be-672b13f54898/about.webp" alt="Milap Publications" /></div>
+            <div class="about-media reveal parallax-local" data-from="36" data-to="-24"><img src="https://admin.storebox.ai/media/b9ed1969-f141-4634-817a-55b6d605a186/ab9483df-85be-4dec-b9be-672b13f54898/about.webp" alt="Milap Publications" /></div>
             <div class="about-copy reveal">
               <p class="eyebrow section-label">Nice to meet you</p>
               <h2>We are Milap</h2>
@@ -1670,6 +1789,8 @@ p {
     var overlay = document.getElementById('menuOverlay');
     var openBtn = document.getElementById('menuOpen');
     var closeBtn = document.getElementById('menuClose');
+    var header = document.getElementById('siteHeader');
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     function openMenu() {
       overlay.hidden = false;
@@ -1689,6 +1810,21 @@ p {
       el.addEventListener('click', closeMenu);
     });
 
+    // Stagger reveal delays
+    document.querySelectorAll('.book-grid .reveal, .notes-grid .reveal').forEach(function (el, i) {
+      el.style.transitionDelay = (i % 4) * 0.06 + 's';
+    });
+
+    // Inject glare layers for tilt cards
+    document.querySelectorAll('.tilt-card').forEach(function (card) {
+      if (!card.querySelector('.tilt-glare')) {
+        var glare = document.createElement('span');
+        glare.className = 'tilt-glare';
+        glare.setAttribute('aria-hidden', 'true');
+        card.appendChild(glare);
+      }
+    });
+
     // Reveal on scroll
     var reveals = document.querySelectorAll('.reveal');
     if ('IntersectionObserver' in window) {
@@ -1699,19 +1835,28 @@ p {
             io.unobserve(entry.target);
           }
         });
-      }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+      }, { threshold: 0.12, rootMargin: '0px 0px -48px 0px' });
       reveals.forEach(function (el) { io.observe(el); });
     } else {
       reveals.forEach(function (el) { el.classList.add('is-in'); });
     }
 
-    // Light parallax for hero floats + intro stagger
-    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var floats = document.querySelectorAll('.parallax-y');
-    var staggers = document.querySelectorAll('.image-row-item.stagger');
-    function onScroll() {
-      if (reduce) return;
-      var y = window.scrollY || 0;
+    if (reduce) {
+      reveals.forEach(function (el) { el.classList.add('is-in'); });
+      return;
+    }
+
+    // Smooth parallax via rAF lerp
+    var floats = Array.prototype.slice.call(document.querySelectorAll('.parallax-y'));
+    var staggers = Array.prototype.slice.call(document.querySelectorAll('.image-row-item.stagger'));
+    var locals = Array.prototype.slice.call(document.querySelectorAll('.parallax-local'));
+    var currentY = window.scrollY || 0;
+    var targetY = currentY;
+    var ticking = false;
+
+    function lerp(a, b, t) { return a + (b - a) * t; }
+
+    function applyParallax(y) {
       floats.forEach(function (el) {
         var speed = parseFloat(el.getAttribute('data-speed') || '0.2');
         el.style.transform = 'translate3d(0,' + (-y * speed) + 'px,0)';
@@ -1720,12 +1865,59 @@ p {
         var rect = el.getBoundingClientRect();
         var prog = 1 - (rect.top + rect.height) / (window.innerHeight + rect.height);
         prog = Math.max(0, Math.min(1, prog));
-        var offset = 50 + ( -50 - 50) * prog;
+        var offset = 56 + (-56 - 56) * prog;
         el.style.transform = 'translate3d(0,' + offset + 'px,0)';
       });
+      locals.forEach(function (el) {
+        var from = parseFloat(el.getAttribute('data-from') || '40');
+        var to = parseFloat(el.getAttribute('data-to') || '-40');
+        var rect = el.getBoundingClientRect();
+        var prog = 1 - (rect.top + rect.height) / (window.innerHeight + rect.height);
+        prog = Math.max(0, Math.min(1, prog));
+        var offset = from + (to - from) * prog;
+        el.style.transform = 'translate3d(0,' + offset + 'px,0)';
+      });
+      if (header) header.classList.toggle('is-scrolled', y > 12);
     }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
+
+    function tick() {
+      currentY = lerp(currentY, targetY, 0.12);
+      applyParallax(currentY);
+      if (Math.abs(targetY - currentY) > 0.15) {
+        requestAnimationFrame(tick);
+      } else {
+        applyParallax(targetY);
+        ticking = false;
+      }
+    }
+
+    window.addEventListener('scroll', function () {
+      targetY = window.scrollY || 0;
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(tick);
+      }
+    }, { passive: true });
+    applyParallax(currentY);
+
+    // Pointer tilt on book cards
+    document.querySelectorAll('.tilt-card').forEach(function (card) {
+      var glare = card.querySelector('.tilt-glare');
+      card.addEventListener('mousemove', function (e) {
+        var rect = card.getBoundingClientRect();
+        var px = (e.clientX - rect.left) / rect.width;
+        var py = (e.clientY - rect.top) / rect.height;
+        var rx = (0.5 - py) * 12;
+        var ry = (px - 0.5) * 12;
+        card.style.transform = 'perspective(900px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) translateY(-8px)';
+        if (glare) {
+          glare.style.background = 'radial-gradient(420px circle at ' + (px * 100) + '% ' + (py * 100) + '%, rgba(255,255,255,0.32), transparent 55%)';
+        }
+      });
+      card.addEventListener('mouseleave', function () {
+        card.style.transform = '';
+      });
+    });
   })();
   </script>
 </body>
