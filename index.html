@@ -574,8 +574,13 @@ p {
 }
 
 .intro-copy {
+  position: relative;
   max-width: 700px;
   text-align: center;
+}
+
+.intro-copy-wrap {
+  padding: 28px 24px 36px;
 }
 
 .intro-copy p {
@@ -595,7 +600,9 @@ p {
 
 /* Featured — Sofia “Latest, and my favorite” */
 .featured {
+  position: relative;
   padding-top: 48px;
+  overflow: hidden;
 }
 
 .featured-inner {
@@ -1210,13 +1217,259 @@ p {
 
 /* Closing */
 .closing {
+  position: relative;
   padding: 80px 0;
   text-align: center;
+  overflow: hidden;
 }
 
 .closing h2 {
+  position: relative;
+  z-index: 1;
   max-width: 520px;
   margin: 0 auto 24px;
+}
+
+.closing .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* —— Doodle accents (ink strokes, scroll-drawn) —— */
+.doodle {
+  color: rgba(0, 0, 0, 0.55);
+  pointer-events: none;
+  overflow: visible;
+}
+
+.doodle-headline {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+}
+
+.doodle-headline-center {
+  display: block;
+  margin-inline: auto;
+}
+
+.doodle-headline-center h2 {
+  position: relative;
+  z-index: 1;
+}
+
+.doodle-underline {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: -6px;
+  width: 84%;
+  height: 18px;
+}
+
+.doodle-hero-underline {
+  bottom: -4px;
+}
+
+.doodle-featured-underline {
+  bottom: -8px;
+}
+
+.doodle-spark {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.doodle-hero-spark {
+  top: -8px;
+  right: -18px;
+}
+
+.doodle-inline-spark {
+  position: relative;
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  margin-left: 6px;
+  vertical-align: -4px;
+  top: auto;
+  right: auto;
+}
+
+.cta-with-doodle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4px;
+}
+
+.cta-with-doodle-inline {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.cta-with-doodle-end {
+  justify-content: flex-end;
+}
+
+.cta-with-doodle-center {
+  display: flex;
+  margin-top: 8px;
+}
+
+.doodle-arrow {
+  position: absolute;
+  width: 88px;
+  height: 66px;
+  color: rgba(0, 0, 0, 0.45);
+  z-index: 0;
+}
+
+.doodle-hero-arrow {
+  left: -72px;
+  top: -28px;
+  transform: rotate(-8deg);
+}
+
+.doodle-featured-arrow {
+  left: -70px;
+  top: -36px;
+  transform: rotate(-12deg);
+}
+
+.doodle-books-arrow {
+  right: calc(100% + 4px);
+  left: auto;
+  top: -30px;
+  transform: scaleX(-1) rotate(-6deg);
+}
+
+.doodle-closing-arrow {
+  left: 50%;
+  top: -52px;
+  margin-left: -110px;
+  transform: rotate(-18deg);
+}
+
+.doodle-wrap {
+  position: absolute;
+  inset: -8px -16px -12px;
+  width: calc(100% + 32px);
+  height: calc(100% + 20px);
+  color: rgba(0, 0, 0, 0.28);
+  z-index: 0;
+}
+
+.intro-copy-wrap > p,
+.intro-copy-wrap > .script {
+  position: relative;
+  z-index: 1;
+}
+
+.doodle-intro-scribble {
+  position: absolute;
+  width: 56px;
+  height: 56px;
+  right: -8px;
+  bottom: -6px;
+  color: rgba(0, 0, 0, 0.35);
+  z-index: 1;
+}
+
+.doodle-closing-wrap {
+  inset: -20px -28px -16px;
+  width: calc(100% + 56px);
+  height: calc(100% + 36px);
+  color: rgba(0, 0, 0, 0.22);
+}
+
+.doodle-backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.doodle-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(40px);
+  will-change: transform, opacity;
+}
+
+.doodle-blob-a {
+  width: min(420px, 70vw);
+  height: min(420px, 70vw);
+  top: 8%;
+  left: -8%;
+  background: radial-gradient(circle, rgba(0, 0, 0, 0.06) 0%, transparent 70%);
+}
+
+.doodle-blob-b {
+  width: min(360px, 60vw);
+  height: min(360px, 60vw);
+  right: -6%;
+  bottom: 10%;
+  background: radial-gradient(circle, rgba(0, 0, 0, 0.05) 0%, transparent 70%);
+}
+
+.doodle-backdrop-scribble {
+  position: absolute;
+  width: 72px;
+  height: 72px;
+  top: 18%;
+  right: 12%;
+  color: rgba(0, 0, 0, 0.2);
+}
+
+.featured-inner,
+.featured-head,
+.featured-label {
+  position: relative;
+  z-index: 1;
+}
+
+.featured-label {
+  display: inline-flex;
+  align-items: center;
+}
+
+@media (max-width: 767px) {
+  .doodle-hero-arrow,
+  .doodle-featured-arrow,
+  .doodle-books-arrow {
+    display: none;
+  }
+
+  .doodle-closing-arrow {
+    left: 12%;
+    margin-left: 0;
+    top: -48px;
+    width: 72px;
+    height: 54px;
+  }
+
+  .doodle-hero-spark {
+    right: 4px;
+    top: -4px;
+  }
+
+  .intro-copy-wrap {
+    padding: 20px 12px 28px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .doodle path {
+    stroke-dasharray: none !important;
+    stroke-dashoffset: 0 !important;
+  }
 }
 
 /* Footer */
@@ -1430,11 +1683,11 @@ p {
 .reveal {
   opacity: 0;
   transform: translate3d(0, 36px, 0) scale(0.98);
-  filter: blur(8px);
+  filter: blur(10px);
   transition:
-    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
-    filter 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 1.05s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1.05s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 1.05s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform, opacity, filter;
 }
 .reveal.is-in {
@@ -1442,6 +1695,23 @@ p {
   transform: none;
   filter: blur(0);
 }
+.doodle-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.doodle-draw-late { transition-delay: 0.55s; transition-duration: 0.45s; }
+.doodle.is-drawn .doodle-draw { stroke-dashoffset: 0; }
+.doodle-pop {
+  opacity: 0;
+  transform: scale(0.4) rotate(-20deg);
+  transform-origin: center;
+  transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
+}
+.doodle.is-drawn .doodle-pop { opacity: 1; transform: none; }
+.doodle-blob { opacity: 0; transform: scale(0.9); transition: opacity 2s ease, transform 2.2s cubic-bezier(0.22,1,0.36,1); }
+.doodle-backdrop.is-drawn .doodle-blob { opacity: 1; transform: scale(1); }
+.doodle-backdrop.is-drawn .doodle-blob-b { transition-delay: 0.2s; }
 .hero-copy { animation: fade-up 1s cubic-bezier(0.22, 1, 0.36, 1) both; }
 .hero-copy h1 { animation: fade-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.05s both; }
 .hero-copy .hero-sub { animation: fade-up 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.16s both; }
@@ -1547,9 +1817,16 @@ p {
       <section class="hero">
         <div class="container hero-inner">
           <div class="hero-copy">
-            <h1>Crafting Stories, Creating Legacies</h1>
+            <div class="doodle-headline">
+              <h1>Crafting Stories, Creating Legacies</h1>
+              <svg class="doodle doodle-underline doodle-hero-underline" viewBox="0 0 200 24" fill="none" aria-hidden="true"><path class="doodle-draw" d="M6 14 C 40 6, 80 18, 120 10 C 150 4, 175 16, 194 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              <svg class="doodle doodle-spark doodle-hero-spark" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path class="doodle-pop" d="M20 4 L21.5 16 L32 12 L24 20 L34 24 L22 23 L24 36 L20 26 L14 36 L16 23 L4 24 L14 20 L6 12 L16.5 16 Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
+            </div>
             <p class="hero-sub">Quality literature that educates, inspires, and enriches. You come away with stories that stay with you.</p>
-            <a class="btn" href="#books">See the books</a>
+            <div class="cta-with-doodle">
+              <svg class="doodle doodle-arrow doodle-hero-arrow" viewBox="0 0 120 90" fill="none" aria-hidden="true"><path class="doodle-draw" d="M18 12 C 38 8, 72 10, 96 38 C 104 48, 108 62, 102 74" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path class="doodle-draw doodle-draw-late" d="M88 68 L102 74 L96 58" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <a class="btn" href="#books">See the books</a>
+            </div>
           </div>
           <div class="hero-stage">
             <div class="hero-float hero-float-portrait parallax-y" data-speed="0.12">
@@ -1584,18 +1861,24 @@ p {
             <div class="image-row-item"><img src="https://admin.storebox.ai/media/b9ed1969-f141-4634-817a-55b6d605a186/c598bda8-dca4-46e2-8fe2-35c38eec3695/a-way-with-words.webp" alt="" /></div>
             <div class="image-row-item stagger"><img src="https://admin.storebox.ai/media/b9ed1969-f141-4634-817a-55b6d605a186/d39289ec-6a26-4867-98ef-6fbdd725ef58/indispensable.webp" alt="" /></div>
           </div>
-          <div class="intro-copy reveal">
+          <div class="intro-copy intro-copy-wrap reveal">
+            <svg class="doodle doodle-wrap doodle-intro-wrap" viewBox="0 0 320 100" fill="none" aria-hidden="true"><path class="doodle-draw" d="M28 52 C 40 18, 110 8, 168 16 C 230 24, 286 34, 294 56 C 302 78, 250 90, 180 92 C 110 94, 42 84, 30 62 C 24 52, 26 48, 28 52 Z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
             <p>This is for you if you care about stories that last — books that educate, inspire, and enrich. From heritage volumes to contemporary voices, every title is shaped with respect for both reader and writer.</p>
             <p class="script">// Milap</p>
+            <svg class="doodle doodle-scribble doodle-intro-scribble" viewBox="0 0 80 80" fill="none" aria-hidden="true"><path class="doodle-draw" d="M18 40 C 18 22, 34 16, 44 24 C 54 32, 50 48, 38 52 C 26 56, 20 46, 28 40 C 36 34, 52 38, 58 50" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
           </div>
         </div>
       </section>
 
       <section class="section featured" id="featured">
+        <div class="doodle-backdrop doodle-backdrop-featured" aria-hidden="true"><span class="doodle-blob doodle-blob-a"></span><span class="doodle-blob doodle-blob-b"></span><svg class="doodle doodle-scribble doodle-backdrop-scribble" viewBox="0 0 80 80" fill="none" aria-hidden="true"><path class="doodle-draw" d="M18 40 C 18 22, 34 16, 44 24 C 54 32, 50 48, 38 52 C 26 56, 20 46, 28 40 C 36 34, 52 38, 58 50" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
         <div class="container featured-inner">
           <div class="featured-head reveal">
-            <p class="featured-label">Latest, and our favorite</p>
-            <h2>Heritage to Horizon</h2>
+            <p class="featured-label">Latest, and our favorite <svg class="doodle doodle-spark doodle-inline-spark" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path class="doodle-pop" d="M20 4 L21.5 16 L32 12 L24 20 L34 24 L22 23 L24 36 L20 26 L14 36 L16 23 L4 24 L14 20 L6 12 L16.5 16 Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg></p>
+            <div class="doodle-headline">
+              <h2>Heritage to Horizon</h2>
+              <svg class="doodle doodle-underline doodle-featured-underline" viewBox="0 0 200 24" fill="none" aria-hidden="true"><path class="doodle-draw" d="M6 14 C 40 6, 80 18, 120 10 C 150 4, 175 16, 194 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </div>
           </div>
           <div class="featured-main">
             <div class="featured-visual reveal">
@@ -1613,7 +1896,8 @@ p {
               </div>
               <div class="featured-buy">
                 <div class="featured-price"><span class="currency">₹</span><span>2,500</span></div>
-                <div class="featured-actions">
+                <div class="featured-actions cta-with-doodle cta-with-doodle-inline">
+                  <svg class="doodle doodle-arrow doodle-featured-arrow" viewBox="0 0 120 90" fill="none" aria-hidden="true"><path class="doodle-draw" d="M18 12 C 38 8, 72 10, 96 38 C 104 48, 108 62, 102 74" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path class="doodle-draw doodle-draw-late" d="M88 68 L102 74 L96 58" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   <a class="btn" href="mailto:info@milappublications.com">Enquire</a>
                   <a class="btn btn-ghost" href="#books">More details</a>
                 </div>
@@ -1634,9 +1918,15 @@ p {
           <div class="books-head reveal">
             <div>
               <p class="eyebrow section-label">All our books</p>
-              <h2>Start with the one that fits</h2>
+              <div class="doodle-headline">
+                <h2>Start with the one that fits</h2>
+                <svg class="doodle doodle-underline " viewBox="0 0 200 24" fill="none" aria-hidden="true"><path class="doodle-draw" d="M6 14 C 40 6, 80 18, 120 10 C 150 4, 175 16, 194 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              </div>
             </div>
-            <a class="btn btn-ghost" href="mailto:info@milappublications.com">Ask about a title</a>
+            <div class="cta-with-doodle cta-with-doodle-end">
+              <svg class="doodle doodle-arrow doodle-books-arrow" viewBox="0 0 120 90" fill="none" aria-hidden="true"><path class="doodle-draw" d="M18 12 C 38 8, 72 10, 96 38 C 104 48, 108 62, 102 74" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path class="doodle-draw doodle-draw-late" d="M88 68 L102 74 L96 58" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <a class="btn btn-ghost" href="mailto:info@milappublications.com">Ask about a title</a>
+            </div>
           </div>
           <div class="book-grid">
             <a class="book-card tilt-card reveal" href="mailto:info@milappublications.com"><img src="https://admin.storebox.ai/media/b9ed1969-f141-4634-817a-55b6d605a186/e3d18768-164d-4ec6-bce2-3a206119022e/the-lonely-rhino.webp" alt="The Lonely Rhino" /><div><h3>The Lonely Rhino</h3><p class="sub">Wildlife storytelling</p></div><div class="book-meta-row"><span>₹499</span><span class="rating">★ 4.9</span></div></a>
@@ -1742,9 +2032,16 @@ p {
       </section>
 
       <section class="closing">
+        <div class="doodle-backdrop doodle-backdrop-closing" aria-hidden="true"><span class="doodle-blob doodle-blob-a"></span><span class="doodle-blob doodle-blob-b"></span><svg class="doodle doodle-scribble doodle-backdrop-scribble" viewBox="0 0 80 80" fill="none" aria-hidden="true"><path class="doodle-draw" d="M18 40 C 18 22, 34 16, 44 24 C 54 32, 50 48, 38 52 C 26 56, 20 46, 28 40 C 36 34, 52 38, 58 50" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
         <div class="container reveal">
-          <h2>Pick the one that matches where you are stuck</h2>
-          <a class="btn" href="#books">See the books</a>
+          <div class="doodle-headline doodle-headline-center">
+            <h2>Pick the one that matches where you are stuck</h2>
+            <svg class="doodle doodle-wrap doodle-closing-wrap" viewBox="0 0 320 100" fill="none" aria-hidden="true"><path class="doodle-draw" d="M28 52 C 40 18, 110 8, 168 16 C 230 24, 286 34, 294 56 C 302 78, 250 90, 180 92 C 110 94, 42 84, 30 62 C 24 52, 26 48, 28 52 Z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          </div>
+          <div class="cta-with-doodle cta-with-doodle-center">
+            <svg class="doodle doodle-arrow doodle-closing-arrow" viewBox="0 0 120 90" fill="none" aria-hidden="true"><path class="doodle-draw" d="M18 12 C 38 8, 72 10, 96 38 C 104 48, 108 62, 102 74" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path class="doodle-draw doodle-draw-late" d="M88 68 L102 74 L96 58" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <a class="btn" href="#books">See the books</a>
+          </div>
         </div>
       </section>
     </main>
@@ -1825,6 +2122,15 @@ p {
       }
     });
 
+    // Prepare doodle stroke lengths for draw-on-scroll
+    document.querySelectorAll('.doodle-draw').forEach(function (path) {
+      try {
+        var len = path.getTotalLength();
+        path.style.strokeDasharray = String(len);
+        path.style.strokeDashoffset = String(len);
+      } catch (e) {}
+    });
+
     // Reveal on scroll
     var reveals = document.querySelectorAll('.reveal');
     if ('IntersectionObserver' in window) {
@@ -1841,8 +2147,40 @@ p {
       reveals.forEach(function (el) { el.classList.add('is-in'); });
     }
 
+    function drawDoodle(el) {
+      el.classList.add('is-drawn');
+      el.querySelectorAll('.doodle-draw').forEach(function (path) {
+        path.style.strokeDashoffset = '0';
+      });
+    }
+
+    // Draw doodles + crossfade backdrops when in view
+    var doodleTargets = document.querySelectorAll('.doodle, .doodle-backdrop');
+    if ('IntersectionObserver' in window) {
+      var dio = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            drawDoodle(entry.target);
+            dio.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.25, rootMargin: '0px 0px -10% 0px' });
+      doodleTargets.forEach(function (el) { dio.observe(el); });
+    } else {
+      doodleTargets.forEach(drawDoodle);
+    }
+
+    // Hero doodles draw shortly after load
+    setTimeout(function () {
+      document.querySelectorAll('.hero .doodle').forEach(drawDoodle);
+    }, 500);
+
     if (reduce) {
       reveals.forEach(function (el) { el.classList.add('is-in'); });
+      doodleTargets.forEach(function (el) { el.classList.add('is-drawn'); });
+      document.querySelectorAll('.doodle-draw').forEach(function (path) {
+        path.style.strokeDashoffset = '0';
+      });
       return;
     }
 
