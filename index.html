@@ -588,10 +588,12 @@ ul { margin: 0; padding: 0; list-style: none; }
 .book-stack {
   position: relative;
   height: clamp(380px, 52vw, 520px);
-  perspective: 1200px;
-  perspective-origin: 50% 42%;
-  transform-style: preserve-3d;
+  perspective: 1400px;
+  perspective-origin: 50% 45%;
+  /* flat = paint by z-index only — avoids 3D plane intersections / torn covers */
+  transform-style: flat;
   touch-action: pan-y;
+  isolation: isolate;
 }
 .book-card {
   position: absolute;
@@ -619,18 +621,17 @@ ul { margin: 0; padding: 0; list-style: none; }
     rotateY(var(--ry))
     rotateX(var(--rx))
     scale(var(--sc));
-  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s ease;
   cursor: pointer;
-  will-change: transform;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
 .book-card::before,
 .book-card::after { display: none !important; }
-.book-card.is-active { z-index: 20; }
-.book-card:not(.is-active) { opacity: 0.88; }
+.book-card.is-active { z-index: 40; }
+.book-card:not(.is-active) { opacity: 0.92; }
 .book-card.is-active { opacity: 1; }
-.book-stack.is-fanned .book-card:not(.is-active) { opacity: 0.95; }
+.book-stack.is-fanned .book-card:not(.is-active) { opacity: 0.98; }
 .book-card-cover {
   position: relative;
   width: 100%;
@@ -647,6 +648,9 @@ ul { margin: 0; padding: 0; list-style: none; }
   isolation: isolate;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+  /* seal subpixel AA gaps at rounded edges */
+  outline: 1px solid #16131c;
+  outline-offset: -1px;
   transition: box-shadow 0.4s ease, border-color 0.35s ease;
 }
 .book-card-cover::before,
@@ -664,9 +668,12 @@ ul { margin: 0; padding: 0; list-style: none; }
   object-fit: cover;
   object-position: center top;
   background: #16131c;
-  transform: translateZ(0);
+  /* slight overscale kills rounded-corner compositor cracks */
+  transform: scale(1.02);
+  transform-origin: center center;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+  pointer-events: none;
 }
 .book-card-meta { display: none; }
 .book-feature {
@@ -2662,24 +2669,25 @@ ul { margin: 0; padding: 0; list-style: none; }
         cards.forEach(function (card, i) {
           var rel = relIndex(i);
           var abs = Math.abs(rel);
+          var dir = rel === 0 ? 0 : (rel > 0 ? 1 : -1);
           if (fanned) {
-            // Soft peel from active — no overlapping through the front face
-            card.style.setProperty('--sx', (rel * 70) + 'px');
-            card.style.setProperty('--sy', (abs * 4) + 'px');
-            card.style.setProperty('--sz', (rel === 0 ? 90 : 20 - abs * 36) + 'px');
-            card.style.setProperty('--ry', (rel * 18) + 'deg');
-            card.style.setProperty('--rx', '3deg');
-            card.style.setProperty('--sc', rel === 0 ? '1.04' : String(Math.max(0.86, 0.98 - abs * 0.04)));
-            card.style.zIndex = String(40 - abs);
+            // Wide 2.5D fan — mild tilt, clear side offsets (no plane piercing)
+            card.style.setProperty('--sx', (rel * 78) + 'px');
+            card.style.setProperty('--sy', (abs * 6) + 'px');
+            card.style.setProperty('--sz', (rel === 0 ? 60 : -abs * 28) + 'px');
+            card.style.setProperty('--ry', (rel * 12) + 'deg');
+            card.style.setProperty('--rx', '0deg');
+            card.style.setProperty('--sc', rel === 0 ? '1.05' : String(Math.max(0.84, 0.97 - abs * 0.045)));
+            card.style.zIndex = String(50 - abs);
           } else {
-            var dir = rel === 0 ? 0 : (rel > 0 ? 1 : -1);
-            var step = abs;
-            card.style.setProperty('--sx', (dir * Math.min(step, 3) * 22) + 'px');
-            card.style.setProperty('--sy', (Math.min(step, 3) * 8) + 'px');
-            card.style.setProperty('--sz', (-Math.min(step, 3) * 36) + 'px');
-            card.style.setProperty('--ry', (dir * Math.min(step, 3) * 11) + 'deg');
-            card.style.setProperty('--rx', (4 + Math.min(step, 3) * 1.5) + 'deg');
-            card.style.setProperty('--sc', rel === 0 ? '1' : String(Math.max(0.9, 1 - abs * 0.035)));
+            // Tight deck: mostly offset + scale; tiny Y rotate for depth cue
+            var step = Math.min(abs, 4);
+            card.style.setProperty('--sx', (dir * step * 18) + 'px');
+            card.style.setProperty('--sy', (step * 10) + 'px');
+            card.style.setProperty('--sz', (rel === 0 ? 40 : -step * 24) + 'px');
+            card.style.setProperty('--ry', (dir * step * 6) + 'deg');
+            card.style.setProperty('--rx', '0deg');
+            card.style.setProperty('--sc', rel === 0 ? '1' : String(Math.max(0.88, 1 - abs * 0.04)));
             card.style.zIndex = String(n - abs);
           }
           card.classList.toggle('is-active', i === active);
